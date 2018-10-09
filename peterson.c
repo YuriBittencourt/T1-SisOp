@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 struct Peterson{
     int *flag;
     int turn;
     int tamanhoVetor;
-}
+};
 
 void unlock (struct Peterson *peterson, int i){
     peterson->flag[i]=0;
