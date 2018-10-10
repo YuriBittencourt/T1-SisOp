@@ -3,26 +3,12 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <time.h>
-
+#include "filter.h"
 #define N 6
 
 int postit = 0;
 
 sem_t mutex, cheia, enchendo;
-
-typedef struct{
-    int *level;
-    int *victim;
-    int tamanhoVetor;
-}Filter;
-
-typedef struct 
-{
-	Filter *filter;
-	int id;
-}Parameters;
-
-
 
 void printArray(int array[], int size){
 	int i;
@@ -31,30 +17,6 @@ void printArray(int array[], int size){
 		printf ("%d ",array[i]);
 	}
 	printf("\n");
-}
-
-
-void unlock (Filter *filter, int id){
-    Filter *local = (Filter *) filter;
-    local->level[id]=0;
-}
-
-void lock(Filter *filter, int id){
-	
-    Filter *local = (Filter *) filter;
-    
-    int i = 0;
-    for (i = 1; i < local->tamanhoVetor; i++){
-    	local->level[id] = i;
-    	local->victim[i] = id;
-
-    	int j = 0;
-    	for (j = 0; j < local->tamanhoVetor; j++){
-    		while (j != id && local->level[j] >= i && local->victim[i] == id){}
-    	}
-    	
-	}
-
 }
 
 void *usuario (void *args){
@@ -90,9 +52,7 @@ void *pombo(void *args){
 	}
 }
 
-
-void main (){
-
+void main(int argc, char *argv[]){
 	int size_threads = N+1;
 	int i = 0;
 	int level[size_threads], victim[size_threads];
