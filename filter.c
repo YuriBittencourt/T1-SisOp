@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <time.h>
 
-
-#define N	20
+#define N 6
 
 int postit = 0;
 
@@ -33,6 +33,7 @@ void printArray(int array[], int size){
 	printf("\n");
 }
 
+
 void unlock (Filter *filter, int id){
     Filter *local = (Filter *) filter;
     local->level[id]=0;
@@ -43,26 +44,17 @@ void lock(Filter *filter, int id){
     Filter *local = (Filter *) filter;
     
     int i = 0;
-    for (i = 0; i < local->tamanhoVetor; i++){
+    for (i = 1; i < local->tamanhoVetor; i++){
     	local->level[id] = i;
     	local->victim[i] = id;
 
-    	printArray(local->level,local->tamanhoVetor);
- 
-    	int conflicts_exist = 1;
-		while (conflicts_exist) {
-			conflicts_exist = 0;
-			int k = 0;
-			for (k = 0; k < local->tamanhoVetor; k++) {
-
-				if (k != id && local->level[k] >= i && local->victim[i] == id) {
-
-					 conflicts_exist = 1;
-					 break;
-				}
-			}
-		}
+    	int j = 0;
+    	for (j = 0; j < local->tamanhoVetor; j++){
+    		while (j != id && local->level[j] >= i && local->victim[i] == id){}
+    	}
+    	
 	}
+
 }
 
 void *usuario (void *args){
@@ -98,6 +90,7 @@ void *pombo(void *args){
 	}
 }
 
+
 void main (){
 
 	int size_threads = N+1;
@@ -106,7 +99,6 @@ void main (){
 
 	for (i = 0; i < size_threads; i ++){
 		level[i] = 0;
-		victim[i] = 0;
 	}
 
 	Filter filter;
@@ -118,13 +110,12 @@ void main (){
 
     sem_init(&cheia, 0, 0);
 	sem_init(&enchendo, 0, N);
-	sem_init(&mutex, 0, 1);
 
     Parameters parameter;
  	parameter.filter = &filter;
  	parameter.id = 0;
 
-    pthread_create(&tpombo, NULL, pombo, (void *)&parameter);
+ 	pthread_create(&tpombo, NULL, pombo, (void *)&parameter);
 
     for (i = 1; i <= N ; i ++){
     	Parameters parameter;
@@ -132,6 +123,7 @@ void main (){
 	 	parameter.id = i;
     	pthread_create(&tusuario[i-1],NULL,usuario,(void*)&parameter);
     }
+    
     pthread_exit(NULL);
 }
 
