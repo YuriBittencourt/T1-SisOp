@@ -10,13 +10,16 @@ typedef struct{
     pthread_t *threads_id;
 }Filter;
 
+void printID(pthread_t pt);
+
 void init_filter_lock(Filter *filter,int size);
 
 void filter_unlock (Filter *filter, int id);
 
 void filter_lock (Filter *filter, int id);
 
-//int filter_findIndex(Filter *filter,pthread_t thread);
+//int filter_findIndex(Filter *filter, pthread_t thread);
 
+//void filter_createIndexThread(Filter *filter,pthread_t thread);
 
 #endif //FILTER_LOCK_H
