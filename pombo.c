@@ -3,8 +3,16 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <time.h>
-#include "filter.h"
+#include "filter_lock.h"
 #define N 6
+
+
+typedef struct
+{
+    Filter *filter;
+    int id;
+}Parameters;
+
 
 int postit = 0;
 
@@ -24,14 +32,14 @@ void *usuario (void *args){
 	while(1){
 		sem_wait(&enchendo);
 		//sem_wait(&mutex);
-		lock(local->filter, local->id);
+		filter_lock(local->filter, local->id);
 		printf("\n usuário %d cola post it %d", local->id,postit);
 		postit++;
 		if (postit == N){
 			sem_post(&cheia);
 		}
 		//sem_post(&mutex);
-		unlock(local->filter, local->id);
+		filter_unlock(local->filter, local->id);
 	}
 }
 
@@ -42,12 +50,12 @@ void *pombo(void *args){
 	while(1){
 		sem_wait(&cheia);
 		//sem_wait(&mutex);
-		lock(local->filter,local->id);
+		filter_lock(local->filter,local->id);
 		printf("\npombo levando a mochila e voltando...");
 		postit = 0;
 		for(i = 0; i < N; i++)
 			sem_post(&enchendo);
-		unlock(local->filter,local->id);
+		filter_unlock(local->filter,local->id);
 		//sem_post(&mutex);
 	}
 }
@@ -64,7 +72,7 @@ void main(int argc, char *argv[]){
 	Filter filter;
 	filter.level = (int*) &level;
 	filter.victim =(int*) &victim;
-	filter.tamanhoVetor = size_threads;
+	filter.array_size = size_threads;
 
 	pthread_t tpombo, tusuario[N];
 
