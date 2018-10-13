@@ -68,6 +68,8 @@ void main(int argc, char *argv[]){
   	pthread_create(&tpombo, NULL, pombo, (void*)&array_threads_ids[size_threads-1]);
 
     pthread_exit(NULL);
+    
+  	destroy_filter_lock(&mutex);
 }
 
 
