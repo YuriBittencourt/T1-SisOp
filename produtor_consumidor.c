@@ -45,7 +45,7 @@ void *producer(void *arg){
 	int id = *(int*)arg;
 	while(1){
 		int item = rand()  % (65 + 1 - 0) + 0;
-		//printf("Produtor %d produzindo o item %d\n",id,item);
+		printf("Produtor %d produzindo o item %d\n",id,item);
 		sem_wait(&empty);
 		//sem_wait(&mutex);
 		filter_lock(&mutex,id);
@@ -66,7 +66,7 @@ void *consumer(void *arg){
 		filter_unlock(&mutex,id);
 		//sem_post(&mutex);
 		sem_post(&empty);
-		//printf("consumidor %d consumindo item %d\n", id, data);
+		printf("consumidor %d consumindo item %d\n", id, data);
 	}
 }
 
