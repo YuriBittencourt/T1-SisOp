@@ -53,3 +53,9 @@ void filter_lock(Filter *filter, int id){
     }
 
 }
+
+void destroy_filter_lock(Filter *filter){
+    free(filter->level);
+    free(filter->victim);
+
+}
