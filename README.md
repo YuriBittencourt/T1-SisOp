@@ -4,7 +4,7 @@
 <p>Para demonstrar a sua implementação, utilize a biblioteca pthreads e descreva duas aplicações. A primeira aplicação consiste no problema dos produtores / consumidores (consulte o material de aula sobre sincronização com semáforos). As regiões críticas devem ser protegidas por sua implementação de mutex (o restante da sincronização com semáforos contadores deve ser mantida). A segunda aplicação consiste no problema dos leitores e escritores (com prioridade para os escritores, consulte o material de aula com exercícios sobre sincronização), que deve ter as regiões críticas protegidas por sua implementação de mutex. O número de threads nas duas aplicações deve ser parametrizável (definido em uma macro ou passado como parâmetro para o programa).</p><br> 
 <p>O trabalho deve ser realizado em duplas. Não esqueçam de identificar-se em um comentário no início do código enviado por um dos integrantes pelo Moodle. O trabalho deverá ser postado no Moodle até as 08hs do dia 16/10/2018.</p>
 
-* - [ ] Criar primitivas para garantir mutex inteiramente por software (*lock(), unlock()*)
-* - [ ] Aplicar em:
-  * - [ ] Produtores/Consumidores
-  * - [ ] Leitores/Escritores com prioridade para os escritores
+* - [x] Criar primitivas para garantir mutex inteiramente por software (*lock(), unlock()*)
+* - [x] Aplicar em:
+  * - [x] Produtores/Consumidores
+  * - [x] Leitores/Escritores com prioridade para os escritores
