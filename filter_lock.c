@@ -11,16 +11,16 @@ void init_filter_lock(Filter *filter,int size){
 
 
 	filter->level = malloc( sizeof(int) * size);
-	filter->victim = malloc( sizeof(int) * size);
+	filter->victim = malloc( sizeof(int) * size-1);
 	filter->array_size = size;
 
 	int i;
 	for (i = 0; i < size; i ++){
 		filter->level[i] = 0;
-		filter->victim[i] = 0;
 	}
-
-
+    for (i = 0; i < size-1; i ++){
+        filter->victim[i] = -1;
+    }
 }
 
 void filter_unlock (Filter *filter, int id){
@@ -34,23 +34,19 @@ void filter_lock(Filter *filter, int id){
         filter->victim[i] = id;
 
         int j;
-        //for (j = 0; j < filter->array_size; j++){
-        //    while (j != id && filter->level[j] >= i && filter->victim[i] == id){continue;}
-        //}
 
-        int someoneBigger = 1;
-        while (filter->victim[i] == id && someoneBigger) {
-            someoneBigger = 0;
+        int sameOrHigher = 1;
+        while (sameOrHigher && filter->victim[i] == id) {
+            sameOrHigher = 0;
             for (j = 0; j < filter->array_size; j++) {
-                if(j == id) continue;
-                if (filter->level[j] >= i) {
-                    someoneBigger = 1;
+                if (j != id && filter->level[j] >= i) {
+                    sameOrHigher = 1;
                     break;
                 }
             }
         }
-
     }
+
 
 }
 
