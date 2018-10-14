@@ -30,6 +30,9 @@ void filter_lock(Filter *filter, int id){
         filter->victim[i] = id;
 
         int j;
+        // matenha esta thread no loop desde que nenhuma
+        // outra thread está no mesmo ou maior nível e enquanto eu não
+        // conseguir nova vítima.
         int sameOrHigher = 1;
         while (sameOrHigher && filter->victim[i] == id) {
             sameOrHigher = 0;
@@ -43,7 +46,7 @@ void filter_lock(Filter *filter, int id){
    }
 }
 
-void destroy_filter_lock(Filter *filter){
+void destroy_filter(Filter *filter){
     free(filter->level);
     free(filter->victim);
 

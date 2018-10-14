@@ -14,6 +14,6 @@ void filter_unlock (Filter *filter, int id);
 
 void filter_lock (Filter *filter, int id);
 
-void destroy_filter_lock(Filter *filter);
+void destroy_filter(Filter *filter);
 
 #endif //FILTER_LOCK_H

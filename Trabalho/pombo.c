@@ -73,7 +73,7 @@ void main(int argc, char *argv[]){
 
     pthread_exit(NULL);
     
-  	destroy_filter_lock(&mutex);
+  	destroy_filter(&mutex);
 }
 
 
