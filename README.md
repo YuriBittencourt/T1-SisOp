@@ -3,7 +3,7 @@
 O primeiro trabalho prático da disciplina de Sistemas Operacionais consiste na implementação de primitivas para garantir a exclusão mútua (mutex) inteiramente por software (ou seja, utilizando espera ocupada). As primitivas a serem implementadas são enter region() (ou lock()) e leave region() (ou unlock()).
 
 As primitivas implementadas não devem utilizar semáforos nem mecanismos de exclusão mútua já presentes na biblioteca pthreads. Escolha algum algoritmo que implementa exclusão mútua por software e que seja generalizado para <i>N processos / threads</i> - por exemplo o algoritmo de Dekker ou o algoritmo de Peterson. 
-***
+
 ## Objetivos: ##
 * - [x] Criar primitivas para garantir mutex inteiramente por software (*lock(), unlock()*)
 * - [x] Aplicar em:
