@@ -26,7 +26,7 @@ Os números de Threads em cada programa foram definidos atráves de macros (\#de
 #define N_WRITERS	1
 ```
 ### Uso do Filter Lock: ###
-Basta fazer include do arquivo filter_lock.h no programa principal e realizar a compilação. Para criar um "mutex" necessita criar um Filter e declar na main a inicialização do mutex:
+Basta fazer include do arquivo filter_lock.h no programa principal e realizar a compilação. Para criar um "mutex" necessita criar um Filter e declarar na main a inicialização do mutex:
 ```c
 #include "filter_lock.h"
 Filter mutex;
