@@ -35,5 +35,5 @@ void main(){
 init_filter_lock(&mutex,num_threads);
 }
 ```
-* `filter_lock()` equivale a P ou wait .
-* `filter_unlock()` equivale a V ou post.
+* `filter_lock(&mutex,id)` equivale a P ou wait .
+* `filter_unlock(&mutex,id)` equivale a V ou post.
