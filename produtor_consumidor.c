@@ -47,11 +47,9 @@ void *producer(void *arg){
 		int item = rand()  % (65 + 1 - 0) + 0;
 		printf("Produtor %d produzindo o item %d\n",id,item);
 		sem_wait(&empty);
-		//sem_wait(&mutex);
 		filter_lock(&mutex,id);
 		enter_item(item);
 		filter_unlock(&mutex,id);
-		//sem_post(&mutex);
 		sem_post(&full);
 	}
 }
@@ -60,11 +58,9 @@ void *consumer(void *arg){
 	int id = *(int*)arg;
 	while (1){
 		sem_wait(&full);
-		//sem_wait(&mutex);
 		filter_lock(&mutex,id);
 		int data = remove_item();
 		filter_unlock(&mutex,id);
-		//sem_post(&mutex);
 		sem_post(&empty);
 		printf("consumidor %d consumindo item %d\n", id, data);
 	}
@@ -95,10 +91,6 @@ void main (){
 		array_threads_ids[cont] = cont;
 		pthread_create(&producers[i],NULL,producer,(void*)&array_threads_ids[cont]);
 		cont++;
-	}
-
-	for (i = 0; i < size_threads; i++){
-		printf("%d ",array_threads_ids[i]);
 	}
 
 	pthread_exit(NULL); 

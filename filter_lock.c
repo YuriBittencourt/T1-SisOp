@@ -1,11 +1,6 @@
 #include "filter_lock.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <pthread.h>
-#include <semaphore.h>
-
-
-sem_t mutex_thread;
 
 void init_filter_lock(Filter *filter,int size){
 
@@ -15,15 +10,16 @@ void init_filter_lock(Filter *filter,int size){
 	filter->array_size = size;
 
 	int i;
-	for (i = 0; i < size; i ++){
+	for (i = 0; i < size; i++){
 		filter->level[i] = 0;
 	}
-    for (i = 0; i < size-1; i ++){
-        filter->victim[i] = -1;
+    for (i = 0; i < size-1; i++){
+        filter->victim[i] = 0;
     }
 }
 
 void filter_unlock (Filter *filter, int id){
+
     filter->level[id]=0;
 }
 
@@ -34,7 +30,6 @@ void filter_lock(Filter *filter, int id){
         filter->victim[i] = id;
 
         int j;
-
         int sameOrHigher = 1;
         while (sameOrHigher && filter->victim[i] == id) {
             sameOrHigher = 0;
@@ -45,9 +40,7 @@ void filter_lock(Filter *filter, int id){
                 }
             }
         }
-    }
-
-
+   }
 }
 
 void destroy_filter_lock(Filter *filter){
