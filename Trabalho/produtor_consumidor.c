@@ -1,3 +1,7 @@
+// Vinicius Duzac Cerutti (15280095-9)
+// Yuri Ferreira Bittencourt (16105132-1)
+// -----------------------------------------
+
 #include <stdio.h>
 #include <pthread.h>
 #include <semaphore.h> 

@@ -1,3 +1,7 @@
+// Vinicius Duzac Cerutti (15280095-9)
+// Yuri Ferreira Bittencourt (16105132-1)
+// -----------------------------------------
+
 #include <pthread.h>
 #ifndef FILTER_LOCK_H
 #define FILTER_LOCK_H

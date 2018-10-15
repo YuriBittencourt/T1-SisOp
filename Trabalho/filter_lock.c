@@ -1,3 +1,8 @@
+// Vinicius Duzac Cerutti (15280095-9)
+// Yuri Ferreira Bittencourt (16105132-1)
+// -----------------------------------------
+
+
 #include "filter_lock.h"
 #include <stdlib.h>
 #include <stdio.h>
