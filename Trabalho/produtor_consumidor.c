@@ -57,24 +57,28 @@ void *producer(void *arg){
 	while(1){
 		// gera um numero aleatorio entre 0-65
 		int item = rand()  % (65 + 1 - 0) + 0;
-		sem_wait(&empty);
+		sem_wait(&empty); // decrementa o contador vazio 
+						  //ideia de estar produzindo algo
 		filter_lock(&mutex,id);
 		printf("Produtor %d produzindo o item %d\n",id,item);
 		enter_item(item);
 		filter_unlock(&mutex,id);
-		sem_post(&full);
+		sem_post(&full); // incrementa o slot full, dizendo que
+						 // algo foi produzido
 	}
 }
 
 void *consumer(void *arg){
 	int id = *(int*)arg;
 	while (1){
-		sem_wait(&full);
+		sem_wait(&full);	// decrementa o contador full 
+						    //ideia de estar consumindo algo
 		filter_lock(&mutex,id);
 		int data = remove_item();
 		printf("consumidor %d consumindo item %d\n", id, data);
 		filter_unlock(&mutex,id);
-		sem_post(&empty);
+		sem_post(&empty); // incrementa o slot empty, dizendo que
+						 // algo foi consumido
 	}
 }
 

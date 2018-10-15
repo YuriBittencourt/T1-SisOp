@@ -10,7 +10,9 @@
 sem_t w_db, r_db;
 
 Filter mutex_rc, mutex_wc, mutex;
-
+// mutex_rc e mutex_wc protegem a variaveis
+// contadoras rc e wc respectivamente
+// mutex - impede que + do que 1 leitor tente entrar na regiao critica
 int rc = 0, wc = 0, reads = 0, writes = 0;
 
 void *reader(void *arg){
@@ -22,7 +24,7 @@ void *reader(void *arg){
 		filter_lock(&mutex_rc,id);
 		rc++;
 
-		if (rc == 1) sem_wait(&w_db);
+		if (rc == 1) sem_wait(&w_db); // bloquia o acesso ao escritores
 
 		filter_unlock(&mutex_rc,id);
 		sem_post(&r_db);
@@ -32,7 +34,8 @@ void *reader(void *arg){
 		filter_lock(&mutex_rc,id);
 		rc--;
 
-		if (rc == 0) sem_post(&w_db);
+		if (rc == 0) sem_post(&w_db); // indica a um escritor que este pode ter
+									  // ter acesso aos dados
 
 		filter_unlock(&mutex_rc,id);
 		printf("(R) thread %d using data...\n", id);
@@ -47,7 +50,7 @@ void *writer(void *arg){
 		filter_lock(&mutex_wc,id);
 		wc++;
 
-		if (wc == 1) sem_wait(&r_db);
+		if (wc == 1) sem_wait(&r_db); //bloqueia o acesso ao escritores
 
 		filter_unlock(&mutex_wc,id);
 		printf("(W) thread %d preparing data...\n", id);
@@ -58,7 +61,8 @@ void *writer(void *arg){
 		filter_lock(&mutex_wc,id);
 		wc--;
 
-		if (wc == 0)sem_post(&r_db);
+		if (wc == 0)sem_post(&r_db); // permite que um processo leitor tente entrar
+									 // na sua regiao critica
 		
 		filter_unlock(&mutex_wc,id);
 	}

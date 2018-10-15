@@ -25,6 +25,9 @@ void filter_unlock (Filter *filter, int id){
 
 void filter_lock(Filter *filter, int id){
     int i;
+    // incrementa o level da thread conforme, o numero de threads
+    // tentando acessar o recurso level-1 = acesso a SC e 
+    // level 1 menor prioridade
     for (i = 1; i < filter->array_size; i++){
         filter->level[id] = i;
         filter->victim[i] = id;
