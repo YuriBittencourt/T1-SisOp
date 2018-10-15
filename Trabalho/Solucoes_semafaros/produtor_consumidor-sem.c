@@ -40,9 +40,9 @@ void *producer(void * args){
 	long int id = (long int) args;
 	while(1){
 		int item = rand()  % (65 + 1 - 0) + 0;
-		printf("produtor %li produzindo o item %d\n",id,item);
 		sem_wait(&empty);
 		sem_wait(&mutex);
+		printf("produtor %li produzindo o item %d\n",id,item);
 		enter_item(item);
 		sem_post(&mutex);
 		sem_post(&full);
@@ -55,9 +55,9 @@ void *consumer(void * args){
 		sem_wait(&full);
 		sem_wait(&mutex);
 		int data = remove_item();
+		printf("consumidor %li consumindo item %d\n",id,data);
 		sem_post(&mutex);
 		sem_post(&empty);
-		printf("consumidor %li consumindo item %d\n",id,data);
 	}
 }
 
